@@ -16,5 +16,46 @@ El diseño generativo o arte generativo es el uso de algoritmos para la formacio
 ¿Como podrias aplicar lo que has visto en tu perfil profesional? 
 al utilizar bases de personajes ua hechas se podrian generar un sistema que sea capaz de interactuar con un usuario al ser capaz de esuchar y ver al usuario generando una experiencia unica y constante sin utilizar ningun tipo de base, dando una experiencia unica al usuario
 
+## Actividad 3
+#### ¿En este sistemas físico interactivo identifica los inputs, outputs y el proceso? 
+Los inputs presentes son aquellos que nos otorga el micro:bit los dos botones que posee el a y el b, ademas del sensor de movimiento y por fuera del micro:bit el boton "give love", los outputs presentes son el canvas en la computadora y los cambios en las esferaz dentro de esta dependiendo del input recibido, y tambien la pantalla de pixeles que esta en el micro:bit que reacciona al boton "give love"
+
+## Actividad 4
+https://editor.p5js.org/consuegra23/sketches/rlwyIpbgY
+<img width="588" height="506" alt="image" src="https://github.com/user-attachments/assets/1587858b-ac8c-40aa-8fbb-d1b24dae158c" />
+
 ``` js
-guhuyhuiuih
+let t = 0;
+
+function setup() {
+  createCanvas(600, 600);
+  background(0);
+  noStroke();
+}
+
+function draw() {
+  fill(0, 20);
+  rect(0, 0, width, height);
+  
+  translate(width / 2, height / 2);
+
+  for (let i = 0; i < 100; i++) {
+    let angle = random(TWO_PI);
+    let radius = 200 * sin(t + i * 0.1);
+    let x = radius * cos(angle);
+    let y = radius * sin(angle);
+
+    fill(
+      128 + 127 * sin(t + i),
+      128 + 127 * sin(t + i + PI / 3),
+      128 + 127 * sin(t + i + PI / 1.5),
+      150
+    );
+
+    let size = random(5, 20);
+    ellipse(x, y, size, size);
+  }
+
+  t += 0.01;
+}
+
