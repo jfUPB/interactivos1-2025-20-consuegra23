@@ -2,8 +2,8 @@
 
 ## 🛠 Fase: Apply
 
-### Actividad 5
-### Actividad 6
+## Actividad 5
+## Actividad 6
 https://editor.p5js.org/consuegra23/sketches/QZBxIda-D 
 ~~~ js
 let port;
