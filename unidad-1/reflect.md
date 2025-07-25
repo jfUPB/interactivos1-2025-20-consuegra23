@@ -8,4 +8,5 @@
 4. el arte tradicional es creado para un solo proposito y es inmodificable ya creado funciona para recrear un mismo patron reconocible que siempre se repetira, en el caso de videos de animacion, musica etc. el arte generativo funciona creando diferentes resultados irrepetibles y unicos para cada situacion.
 5. podria crearse un programa que detecte cada que el micro:bit es sacudido y este genere un numero al azar dependiendo del color y el p5.js sea capaz de relacionar cada numero generable con un color en especifico y le coloque este color al circulo dibujado.
 ### Parte 2
-1. en cuanto a lo conceptual lo mas complicado de entender para mi fue el funcionamiento de los outputs mas complejos que nos mostraron en los ejemplos, en este caso aquellos que utilizaban ia y en cuanto a lo tecnico
+1. en cuanto a lo conceptual lo mas complicado de entender para mi fue el funcionamiento de los outputs mas complejos que nos mostraron en los ejemplos, en este caso aquellos que utilizaban ia y en cuanto a lo tecnico fue en general la programacion pues yo no tengo conocimintos previos ni de phyton ni java script asi que creo que freno un poco mi aprendizaje tener que adaptarme a dos nuevos lenguajes de programacion en tan poco tiempo
+2. 
