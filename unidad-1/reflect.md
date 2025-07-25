@@ -16,7 +16,7 @@
 
 5. Podria crearse un programa que detecte cada que el micro:bit es sacudido y este genere un numero al azar dependiendo del color y el p5.js sea capaz de relacionar cada numero generable con un color en especifico y le coloque este color al circulo dibujado.
 
-### Parte 2
+#### Parte 2
 1. En cuanto a lo conceptual lo mas complicado de entender para mi fue el funcionamiento de los outputs mas complejos que nos mostraron en los ejemplos, en este caso aquellos que utilizaban ia y en cuanto a lo tecnico fue en general la programacion pues yo no tengo conocimintos previos ni de phyton ni java script asi que creo que freno un poco mi aprendizaje tener que adaptarme a dos nuevos lenguajes de programacion en tan poco tiempo
 
 2. Yo diria que mi momento "AHA" fue en la actividad 4 y en la actividad 6, pues respectivamente la actividad 4 fue la primera vez que comprendi como funcionaba un sistema fiscio pues con lo genial que fue el resultado me llevo a indagar un poco mas, y en la 6 fue la primera vez que modifique un codigo de clase sin problemas para crear algo nuevo.
@@ -26,3 +26,14 @@
 4. A mi me gusto mucho como funcionaba el paso a paso de la actividad 5 pues al no soltar el codigo todo de golpe si no ir con las correciones que suele hacer uno como programador siente que el proceso y uno comprende mucho mas que al soltar todo el codigo de golpe
 
 ### Actividad 8
+
+Debido a que nosotros trabajamos en la solucion del programa juntos el codigo es mas o menos igual, pero noto que mi compañero tiene una manera mas organizada de trabajar el codigo sobre todo en el p5.js pero de cambios notables no hay muchos, simplemente la eleccion de un color diferente.
+### Actividad 9
+
+1. El primer video que vimos de aquel concierto en españa que tenia una VJ que producia visuales por medio de lo que dibujaba y sentia y lo que interpretaba de la obra me parecio muy impresionante y genuinamente me intereso muchisimo.
+
+2. Como dejar de hacer no tengo un problema en la clase pues las explicaciones fueron siempre consisas.
+
+3.Empezar a dar una pequeña introduccion a los lenguajes que se van a utilizar, al menos lo digo por que como dije antes no tengo experiencia con ninguno de los dos y puedo llegar a pensar que puede limitar mi desarrollo o aprendizaje, aunque no son complicados de entender ya vistos pero igual lo comento.
+
+4.a mi me parecio que siempre hubo un buen equilibrio en cuanto a lo tecnico y lo conceptual, pues inspirarnos para antes de trabajar fue una grandiosa idea y al menos en mi genuinamente sirvio.
