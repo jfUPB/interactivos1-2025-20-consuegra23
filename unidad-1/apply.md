@@ -64,7 +64,6 @@ from microbit import *
 uart.init(baudrate=115200)
 display.show(Image.ARROW_E)
 while True:
-~~~
 
     if button_a.is_pressed():
         uart.write('A')
