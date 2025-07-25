@@ -3,6 +3,7 @@
 ## 🛠 Fase: Apply
 
 ## Actividad 5
+El sistema funciona por medio de el Micro:bit que en su codigo de Phython constantemente esta preguntanto si se esta precionando el boton a, en caso de lo contrario el mandara una señal N, si este boton fue presionado mandara una señal A, estos son los outputs del programa, como input el programa de p5.js primero forma un canvas y pregunta por el micro:bit al este estar conectado el programa recibira los inputs y analizara que letra se esta enviando, al recibir una N generara un cuadrado de color verde, pero mientras reciba una A este cambiara el anterior por un cuadrado rojo.
 ## Actividad 6
 https://editor.p5js.org/consuegra23/sketches/QZBxIda-D 
 ~~~ js
@@ -62,6 +63,7 @@ from microbit import *
 uart.init(baudrate=115200)
 display.show(Image.ARROW_E)
 while True:
+~~~
 
     if button_a.is_pressed():
         uart.write('A')
