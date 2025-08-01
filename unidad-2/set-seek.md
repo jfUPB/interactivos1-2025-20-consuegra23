@@ -19,4 +19,49 @@ Los eventos o inputs que se manejan en este programa no vienen de botones ni sen
 Las acciones en el programa son prender un pixel con intensidad 9 o apagarlo poniéndolo en intensidad 0 y alternar entre estas dos acciones cada vez que pasa el tiempo de espera, esto se hace para cada pixel por separado logrando que parpadeen de forma independiente en la pantalla del micro\:bit.
 ### Unidad 2
 
+#### 1.
 
+```py
+from microbit import *
+import utime
+
+class Semaforo:
+    def __init__(self):
+        self.state = "Rojo"
+        self.startTime = utime.ticks_ms()
+        self.intervalos = {
+            "Rojo": 3000,
+            "AmarilloSubir": 1000,
+            "Verde": 3000,
+            "AmarilloBajar": 1000
+        }
+
+    def mostrar_estado(self):
+        display.clear()
+        if self.state == "Rojo":
+            display.set_pixel(2, 0, 9)
+        elif self.state == "Verde":
+            display.set_pixel(2, 4, 9)
+        elif self.state.startswith("Amarillo"):
+            display.set_pixel(2, 2, 9)
+
+    def update(self):
+        if utime.ticks_diff(utime.ticks_ms(), self.startTime) > self.intervalos[self.state]:
+            self.startTime = utime.ticks_ms()
+            if self.state == "Rojo":
+                self.state = "AmarilloSubir"
+            elif self.state == "AmarilloSubir":
+                self.state = "Verde"
+            elif self.state == "Verde":
+                self.state = "AmarilloBajar"
+            elif self.state == "AmarilloBajar":
+                self.state = "Rojo"
+        self.mostrar_estado()
+
+semaforo = Semaforo()
+
+while True:
+    semaforo.update()
+```
+#### 2. 
+Los estados del código son Rojo, AmarilloSubir, Verde y AmarilloBajar que representan cada luz del semáforo y el momento en el que se encuentra, los eventos son el paso del tiempo que se mide con la función ticks_ms y cuando esa diferencia supera el intervalo definido para el estado actual se activa el cambio, las acciones son encender el LED correspondiente en la pantalla del micro:bit y cambiar al siguiente estado para mantener el ciclo Rojo a AmarilloSubir a Verde a AmarilloBajar a Rojo funcionando correctamente.
