@@ -18,3 +18,5 @@ Los eventos o inputs que se manejan en este programa no vienen de botones ni sen
 #### 4.
 Las acciones en el programa son prender un pixel con intensidad 9 o apagarlo poniéndolo en intensidad 0 y alternar entre estas dos acciones cada vez que pasa el tiempo de espera, esto se hace para cada pixel por separado logrando que parpadeen de forma independiente en la pantalla del micro\:bit.
 ### Unidad 2
+
+
