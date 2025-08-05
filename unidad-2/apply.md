@@ -52,4 +52,6 @@ while True:
             current_state = STATE_INIT
             display.clear()
 ```
+<img width="681" height="591" alt="Diagrama sin título drawio" src="https://github.com/user-attachments/assets/5524f478-01fb-4028-b90a-9fcac8a71851" />
+
 
