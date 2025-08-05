@@ -65,3 +65,42 @@ while True:
 ```
 #### 2. 
 Los estados del código son Rojo, AmarilloSubir, Verde y AmarilloBajar que representan cada luz del semáforo y el momento en el que se encuentra, los eventos son el paso del tiempo que se mide con la función ticks_ms y cuando esa diferencia supera el intervalo definido para el estado actual se activa el cambio, las acciones son encender el LED correspondiente en la pantalla del micro:bit y cambiar al siguiente estado para mantener el ciclo Rojo a AmarilloSubir a Verde a AmarilloBajar a Rojo funcionando correctamente.
+
+### Unidad 3
+
+
+#### 1. Por qué decimos que este programa permite realizar de manera concurrente varias tareas
+El programa funciona de manera concurrente porque, aunque solo corre un hilo, su estructura basada en estados y en verificación de eventos (botón presionado y paso de intervalos de tiempo) le permite “escuchar” y responder a múltiples condiciones casi al mismo tiempo. Esto significa que, mientras el sistema se encuentra mostrando una imagen, al mismo tiempo está verificando si pasó el intervalo necesario para cambiar de estado o si se presionó el botón, lo cual permite manejar varias tareas sin detener la ejecución general, como si trabajaran de forma paralela.
+
+#### 2. Estados, eventos y acciones en el programa
+Estados: STATE_INIT, STATE_HAPPY, STATE_SMILE, STATE_SAD.
+
+Eventos:
+Presionar el botón A (button_a.was_pressed()),
+Que el tiempo transcurrido supere el intervalo (utime.ticks_diff(...) > interval).
+
+Acciones:
+Mostrar imágenes (display.show(Image.HAPPY/SMILE/SAD)),
+Reiniciar el tiempo (start_time = utime.ticks_ms()),
+Cambiar el intervalo y pasar al siguiente estado (current_state = ...).
+
+#### 4. Vectores de prueba
+
+Vector de prueba 1:
+Condición inicial: Sistema en STATE_INIT.
+Evento: Se deja correr el código sin presionar botones.
+Resultado esperado: Debe mostrar la imagen HAPPY y pasar automáticamente a STATE_HAPPY con intervalo de 1500 ms.
+Resultado obtenido: El sistema realiza exactamente esa transición.
+
+Vector de prueba 2:
+Condición inicial: Sistema en STATE_HAPPY.
+Evento: Presionar botón A.
+Resultado esperado: Debe mostrar SAD, establecer intervalo de 2000 ms y pasar a STATE_SAD.
+Resultado obtenido: El sistema cumple con esa transición.
+ Prueba pasada.
+
+Vector de prueba 3:
+Condición inicial: Sistema en STATE_SMILE.
+Evento: Dejar correr el tiempo sin presionar botones hasta superar los 1000 ms.
+Resultado esperado: Mostrar SAD, intervalo 2000 ms, pasar a STATE_SAD.
+Resultado obtenido: Efectivamente el sistema hace este cambio.
