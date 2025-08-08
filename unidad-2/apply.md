@@ -54,4 +54,17 @@ while True:
 ```
 <img width="681" height="591" alt="Diagrama sin título drawio" src="https://github.com/user-attachments/assets/5524f478-01fb-4028-b90a-9fcac8a71851" />
 
+Vector de prueba 1
+Estado inicial: STATE_INIT con start_time = 20000.
+Acción: Pulsar el botón A una vez.
+Resultado esperado: start_time aumenta a 21000 y se imprime “21000” por el puerto serie. El estado sigue siendo STATE_INIT.
 
+Vector de prueba 2
+Estado inicial: STATE_KABOOM.
+Acción: Pulsar el botón B.
+Resultado esperado: El programa cambia al estado STATE_INIT, borra la pantalla y deja de mostrar la calavera.
+
+Vector de prueba 3
+Estado inicial: STATE_ARMED.
+Accion: Contar hasta 32000 ms.
+Resultado esperado: Muestra una calavera y cambia el estado a STATE_KABOOM.
