@@ -2,7 +2,7 @@
 
 ## Código
 
-[Enlace a la aplicación a modificar](URL)
+[Enlace a la aplicación a modificar](https://editor.p5js.org/generative-design/sketches/ryklecq9Ty4)
 
 Código a modificar:
 
@@ -97,7 +97,7 @@ function keyReleased() {
 
 ```
 
-[Enlace a la aplicación modificada](URL)
+[Enlace a la aplicación modificada](https://editor.p5js.org/consuegra23/sketches/Jp4pv8Qow)
 
 Código modificado:
 
@@ -278,6 +278,7 @@ function keyReleased() {
 
 ## Video
 
-[Video demostratativo](URL)
+[Video demostratativo](https://youtu.be/tvl_E-oWaYA)
+
 
 
