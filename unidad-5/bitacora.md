@@ -76,4 +76,12 @@ Byte 5: estado del botón B (bState) como entero de 8 bits (0 o 1).
 Estos datos se envían en formato binario, lo que permite una transmisión más eficiente que el uso de texto ASCII, especialmente útil cuando se requiere velocidad o se trabaja con recursos limitados.
 
 A pesar de las desventajas mencionadas las ventajas son claras, binario es infintamente mas rapido, pues manda los datos muchisimo mas rapido y pesando infinitamente menos, pues los 6 bytes que utilizamos en enviarlo son 21 bytes o mas cuando lo hacemos en ascii me gustaria probar si aquel programa que hice la unidad pasada seria mucho mas rapido si los datos se enviaran en binario pues este tenia problemas de rendimiento
-## Actividad 3
+## Auto evaluacion
+Mi trabajo se encuentra en un nivel En desarrollo (2.0 - 3.4) porque aunque logré comprender varios aspectos importantes del protocolo de comunicación entre el micro:bit y p5.js, reconozco que aún hay errores y vacíos en mi análisis que afectan la profundidad de la reflexión. En la Actividad 01, describo correctamente cómo se estructura el protocolo ASCII y cómo se interpreta en p5.js, incluyendo la lógica para generar eventos como “A pressed” y “B released”. Sin embargo, mi explicación se enfoca más en lo que ocurre que en por qué ocurre, y no profundizo en las implicaciones del diseño del protocolo ni en posibles alternativas.
+
+En la Actividad 02, intento comparar el protocolo binario con el ASCII y reconozco que el binario es más eficiente, pero mi análisis es más intuitivo que técnico. Aunque identifico correctamente que se envían 6 bytes por mensaje y explico el uso de `struct.pack`, mi comprensión del formato hexadecimal es limitada y eso me impide analizar con mayor precisión los datos recibidos. También cometo errores de redacción y algunas ideas quedan poco claras o mal expresadas, lo cual afecta la articulación de los conceptos.
+
+A pesar de estas fallas, sin contar ademas que por mala administracion de mi tiempo ni siquiera hice la actividad 3 y 4. estoy haciendo un esfuerzo por entender los mecanismos detrás de la comunicación serial y por conectar lo que observo con lo que aprendo. Me doy cuenta de que el framing, el checksum y la estructura binaria tienen un propósito claro, aunque todavía me cuesta explicarlo con profundidad. Por eso considero que mi trabajo está en desarrollo: estoy avanzando, pero aún necesito mejorar la calidad de mis experimentos, la claridad de mis reflexiones y la apropiación de los conceptos técnicos.
+
+
+
