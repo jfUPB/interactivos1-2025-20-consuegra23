@@ -42,4 +42,10 @@ El servidor empieza a escuchar y revisar la existencia de las paginas, esto se p
 
 #### Describe lo que ves inicialmente en page1 y page2 en tu navegador.
 
-Cuando se colocan cualquiera de las dos paginas se inica
+Cuando se colocan cualquiera de las dos paginas se inicia a buscar si la otra pagina ya esta abierta y mientras tanto muestra que se esta esperando la conexion, despues de que se inicie la segunda pagina y el servidor este funcionando estas muestran una esfera en cada pagina conectadas por medio de una linea que siempre conecta ambas.
+
+#### ¿Qué mensajes aparecieron en la terminal del servidor cuando abriste page1 y page2?
+
+en el servidor se empiezan a mandar los datos del centro donde esta la esfera en la pagina y se actualiza solo cuando las paginas se mueven.
+
+#### 
