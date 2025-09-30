@@ -104,3 +104,98 @@ Otra ventaja es que facilita la colaboración entre equipos, ya que todos trabaj
 La diferencia fundamental entre HTTP y WebSockets/Socket.IO está en cómo se comunican el cliente y el servidor. HTTP es una comunicación de tipo petición-respuesta: el cliente pide algo y el servidor responde, pero no hay conexión constante. En cambio, WebSockets y Socket.IO permiten una conexión abierta y continua, donde ambos pueden enviarse mensajes en tiempo real sin necesidad de recargar la página.
 
 Este tipo de comunicación se usa en aplicaciones como chats en línea, videojuegos multijugador, transmisiones en vivo, tableros colaborativos o sistemas de monitoreo. En estos casos, la velocidad y la actualización instantánea son clave para una buena experiencia de usuario.
+
+## Actividad 4
+#### cambiar la ruta de page1 a pagina_uno
+el programa funciona completamente bien y sin ningun problema o variacion, lo que muestra que la ruta no es lo mas primordial al momento de iniciar el programa y solo nos ayuda a iniciar la pagina y puede ser modificada sin ningun problema mayor
+#### Seguir los pasos mientras se observa el servidor
+Received win1update from ID: oJdzmHDxeO__tgF8AAAB Data: { x: 1001, y: 156, width: 492, height: 593 }
+Debug - Connected clients: 1, Page1: 1, Page2: 0, Synced: 0
+Sync status: pages=false, synced=false, clients=1
+Debug - Connected clients: 1, Page1: 1, Page2: 0, Synced: 1
+Sync status: pages=false, synced=true, clients=1
+Esto es lo que se ve cuando se inicia la pagina uno individualmente sin inicar la pagina dos, ni moverla de su lugar, muestra que en un dato booleano tiene que si la pagina esta activa y es capaz de medir su ubicacion en la pantalla.
+Received win2update from ID: AOTPzaymCVyH3MUZAAAD Data: { x: 499, y: 154, width: 492, height: 591 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 1
+Sync status: pages=true, synced=false, clients=2
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 1
+Sync status: pages=true, synced=false, clients=2
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Received win2update from ID: AOTPzaymCVyH3MUZAAAD Data: { x: 499, y: 154, width: 492, height: 625 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Received win1update from ID: oJdzmHDxeO__tgF8AAAB Data: { x: 1001, y: 156, width: 492, height: 625 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Al iniciar la segunda pagina vuelve a comprobar la ubicacion de ambas y ahora muestra que las dos estan activadas mas no sincronizadas pues solo hay un Synced,  ya despues de eso vuelve  a hacer el analizis y ya ambas estan Synced y funcionando con normalidad
+User disconnected - ID: oJdzmHDxeO__tgF8AAAB
+User disconnected - ID: AOTPzaymCVyH3MUZAAAD
+Estos fueron los mensajes enviados por el programa al desconectar respectivamente pagina 1 y pagina 2 simplemente se desconectan y dejan de hacer la busqueda enseguida
+como conclusion delos Id puedo ver que varian usualmente cuando se haee un cambio en el servidor y cada uno de los ID parece representar cada uno a una de las paginas pues cada ID da coordenadas diferentes y se muestra el mismo cuando se desconecta su pagina respectiva
+#### Analizis de Winupdate
+Received win1update from ID: RFziBF8MEg-_9gyIAAAB Data: { x: 526, y: 186, width: 492, height: 625 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Received win2update from ID: iTb5B_3tvr-AJJkPAAAD Data: { x: 1045, y: 143, width: 492, height: 625 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Se puede ver que cada pagina se actualiza individualmente en su propio update y muestra solo sus datos junto con su id como dije en el pasado
+Received win1update from ID: P8NUU74rQjI86n7HAAAD Data: { x: 607, y: 119, width: 492, height: 625 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Despues de hacer los camios dados no note una diferencia notable en el win1update
+#### Cambiar el numero del port
+<img width="1648" height="782" alt="image" src="https://github.com/user-attachments/assets/31550d1a-4310-434a-977a-17215bae41ee" />
+Server is listening on http://localhost:3001
+A user connected - ID: SOVMfGBfVqYo_sk4AAAB
+Received win2update from ID: SOVMfGBfVqYo_sk4AAAB Data: { x: 1227, y: 348, width: 492, height: 593 }
+Debug - Connected clients: 1, Page1: 0, Page2: 1, Synced: 0
+Sync status: pages=false, synced=false, clients=1
+Debug - Connected clients: 1, Page1: 0, Page2: 1, Synced: 1
+Sync status: pages=false, synced=true, clients=1
+A user connected - ID: AGPZ7aVIalgIbpK7AAAD
+Received win2update from ID: AGPZ7aVIalgIbpK7AAAD Data: { x: 856, y: 147, width: 492, height: 591 }
+Debug - Connected clients: 2, Page1: 0, Page2: 2, Synced: 1
+Sync status: pages=false, synced=false, clients=2
+Debug - Connected clients: 2, Page1: 0, Page2: 2, Synced: 1
+Sync status: pages=false, synced=false, clients=2
+Debug - Connected clients: 2, Page1: 0, Page2: 2, Synced: 2
+Sync status: pages=false, synced=true, clients=2
+Parece que la pagina no inicia correctamente como se muestra en la imagen pero los datos de incio funcionan correctamente,pero al nuna iniciar no puedo comprbar si estos pueden detectar los movimientos de la pestaña
+<img width="1640" height="714" alt="image" src="https://github.com/user-attachments/assets/1be90a97-a4a3-48c0-943a-c4b7b7f37791" />
+User disconnected - ID: AGPZ7aVIalgIbpK7AAAD
+A user connected - ID: NZcAn2p64E_H6LYPAAAF
+Received win1update from ID: NZcAn2p64E_H6LYPAAAF Data: { x: 0, y: 0, width: 1920, height: 945 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 1
+Sync status: pages=true, synced=false, clients=2
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 1
+Sync status: pages=true, synced=false, clients=2
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Received win2update from ID: SOVMfGBfVqYo_sk4AAAB Data: { x: 1284, y: 201, width: 492, height: 625 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Received win2update from ID: SOVMfGBfVqYo_sk4AAAB Data: { x: 1284, y: 192, width: 492, height: 625 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Received win2update from ID: SOVMfGBfVqYo_sk4AAAB Data: { x: 1283, y: 189, width: 492, height: 625 }
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
+All clients are fully synced
+Por alguna razon despues de comprobar que intentar entrar con el port en 3000 no servia y volver a abrir el 3001 en un navegador diferente empezo a fucnionar de la nada y sin motivo aparente, esto rompe todo lo que creia del funionanmiento del port haciendo que no fuera un numero arbitrario, pero parece que si lo haz pues no modifico el funcionamiento
