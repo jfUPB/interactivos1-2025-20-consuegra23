@@ -213,3 +213,732 @@ Al seguir las instrucciones sin reinciar la pgaina llega hasta este punto ahi se
 
 Despues de reiniciar y despues de reiniciar el servidor y reiniciar la pagina respectivamente, se puede ver que sin iniciar el servidor todavia presenta el mismo error de codigo por lo que se asume que ese error es que no es capaz de encontrar el servidor por el que funciona. y al iniciar el servidor luego funciona normalmente y no presenta errores.
 
+## Actividad 05
+Inspirandome de la serie animada jujutsu kaisen y la tecnica Vacio purputa que se ve de la siguiente manera:
+https://tenor.com/qfF7VFtilrY.gif
+Plantee lo siguiente
+
+<img width="3910" height="915" alt="image" src="https://github.com/user-attachments/assets/479f222e-62a2-408e-bdac-85f1c7678587" />
+
+Aprovechando que ambas esferas estan conectadas constantemente por una vara en la mitad, se puede usar el codigo que determina el tamaño de esta vara como base para medir la distancia de las dos esferas.
+<img width="3949" height="727" alt="image" src="https://github.com/user-attachments/assets/11723b0b-c439-454d-aa3a-fa179cc3d98f" />
+
+<img width="2593" height="715" alt="image" src="https://github.com/user-attachments/assets/a93629dc-af22-4ae9-819d-51581ca4e1e2" />
+
+<img width="4308" height="3000" alt="image" src="https://github.com/user-attachments/assets/d4e95302-9a69-43a0-b6eb-eb62eaebc048" />
+
+El programa tiene que funcionar de la siguiente manera, las esferas cuando esten a una distancia aplia van no van a interactuar de ninguna manera, cuando esten relativamente mas cerca van a empezar a mandarse entre ellas particulas de su respectivo color hacia el centro y cuando esten una encima de la otra estas se van a convinar en una sola esfera y esta va a disparar rayos purpuras y particulas del mismo color, ademas que entre mas cerca esten mas oscuro se va a ver el fondo para efectos dramaticos
+
+
+~~~ js
+let currentPageData = {
+    x: window.screenX,
+    y: window.screenY,
+    width: window.innerWidth,
+    height: window.innerHeight
+}
+
+let previousPageData = {
+    x: window.screenX,
+    y: window.screenY,
+    width: window.innerWidth,
+    height: window.innerHeight
+};
+
+let remotePageData = { x: 0, y: 0, width: 100, height: 100 };
+let point1 = [currentPageData.width / 2, currentPageData.height / 2];
+let socket;
+let isConnected = false;
+let hasRemoteData = false;
+let isFullySynced = false;
+
+// Sistema de partículas
+let particles = [];
+let lightningBolts = [];
+
+// Configuración de distancias (en píxeles)
+const DISTANCE_FAR = 800;      // Lejos: no hace nada
+const DISTANCE_MEDIUM = 400;   // Medio: empieza a lanzar partículas
+const DISTANCE_CLOSE = 150;    // Cerca: fusión y explosión
+
+function setup() {
+    createCanvas(windowWidth, windowHeight);
+    frameRate(60);
+    socket = io();
+
+    socket.on('connect', () => {
+        console.log('Connected with ID:', socket.id);
+        isConnected = true;
+        socket.emit('win1update', currentPageData, socket.id);
+        
+        setTimeout(() => {
+            socket.emit('requestSync');
+        }, 500);
+    });
+
+    socket.on('getdata', (response) => {
+        if (response && response.data && isValidRemoteData(response.data)) {
+            remotePageData = response.data;
+            hasRemoteData = true;
+            console.log('Received valid remote data:', remotePageData);
+            socket.emit('confirmSync');
+        }
+    });
+
+    socket.on('fullySynced', (synced) => {
+        isFullySynced = synced;
+        console.log('Sync status:', synced ? 'SYNCED' : 'NOT SYNCED');
+    });
+
+    socket.on('peerDisconnected', () => {
+        hasRemoteData = false;
+        isFullySynced = false;
+        particles = [];
+        lightningBolts = [];
+        console.log('Peer disconnected, waiting for reconnection...');
+    });
+
+    socket.on('disconnect', () => {
+        isConnected = false;
+        hasRemoteData = false;
+        isFullySynced = false;
+        particles = [];
+        lightningBolts = [];
+        console.log('Disconnected from server');
+    });
+}
+
+function isValidRemoteData(data) {
+    return data && 
+           typeof data.x === 'number' && 
+           typeof data.y === 'number' && 
+           typeof data.width === 'number' && data.width > 0 &&
+           typeof data.height === 'number' && data.height > 0;
+}
+
+function checkWindowPosition() {
+    currentPageData = {
+        x: window.screenX,
+        y: window.screenY,
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+
+    if (currentPageData.x !== previousPageData.x || currentPageData.y !== previousPageData.y || 
+        currentPageData.width !== previousPageData.width || currentPageData.height !== previousPageData.height) {
+
+        point1 = [currentPageData.width / 2, currentPageData.height / 2]
+        socket.emit('win1update', currentPageData, socket.id);
+        previousPageData = currentPageData;
+    }
+}
+
+// Calcular distancia entre las dos esferas
+function calculateDistance(x1, y1, x2, y2) {
+    return dist(x1, y1, x2, y2);
+}
+
+// Clase para partículas individuales
+class Particle {
+    constructor(x, y, targetX, targetY, col, isExplosion = false) {
+        this.pos = createVector(x, y);
+        this.col = col;
+        this.alpha = 255;
+        this.size = random(3, 8);
+        this.isExplosion = isExplosion;
+        
+        if (isExplosion) {
+            // Partículas de explosión: dirección aleatoria hacia afuera
+            let angle = random(TWO_PI);
+            let speed = random(3, 8);
+            this.vel = createVector(cos(angle) * speed, sin(angle) * speed);
+            this.life = 255;
+        } else {
+            // Partículas normales: van hacia el objetivo
+            this.target = createVector(targetX, targetY);
+            let direction = p5.Vector.sub(this.target, this.pos);
+            direction.normalize();
+            direction.mult(random(2, 4));
+            this.vel = direction;
+        }
+    }
+    
+    update() {
+        this.pos.add(this.vel);
+        
+        if (this.isExplosion) {
+            this.life -= 3;
+            this.alpha = this.life;
+        } else {
+            this.alpha -= 2;
+        }
+    }
+    
+    display() {
+        noStroke();
+        fill(this.col.levels[0], this.col.levels[1], this.col.levels[2], this.alpha);
+        circle(this.pos.x, this.pos.y, this.size);
+        
+        // Glow effect
+        fill(this.col.levels[0], this.col.levels[1], this.col.levels[2], this.alpha * 0.3);
+        circle(this.pos.x, this.pos.y, this.size * 2);
+    }
+    
+    isDead() {
+        if (this.isExplosion) {
+            return this.life <= 0;
+        }
+        return this.alpha <= 0;
+    }
+}
+
+// Clase para rayos de luz
+class LightningBolt {
+    constructor(x, y) {
+        this.pos = createVector(x, y);
+        let angle = random(TWO_PI);
+        let length = random(100, 250);
+        this.endX = x + cos(angle) * length;
+        this.endY = y + sin(angle) * length;
+        this.segments = [];
+        this.life = 255;
+        this.generateSegments();
+    }
+    
+    generateSegments() {
+        let steps = 10;
+        for (let i = 0; i <= steps; i++) {
+            let t = i / steps;
+            let x = lerp(this.pos.x, this.endX, t) + random(-10, 10);
+            let y = lerp(this.pos.y, this.endY, t) + random(-10, 10);
+            this.segments.push(createVector(x, y));
+        }
+    }
+    
+    update() {
+        this.life -= 15;
+    }
+    
+    display() {
+        stroke(150, 50, 200, this.life);
+        strokeWeight(3);
+        noFill();
+        beginShape();
+        for (let seg of this.segments) {
+            vertex(seg.x, seg.y);
+        }
+        endShape();
+        
+        // Glow
+        stroke(200, 100, 255, this.life * 0.5);
+        strokeWeight(6);
+        beginShape();
+        for (let seg of this.segments) {
+            vertex(seg.x, seg.y);
+        }
+        endShape();
+    }
+    
+    isDead() {
+        return this.life <= 0;
+    }
+}
+
+function draw() {
+    // Fondo dinámico según distancia
+    let bgColor = 220;
+    
+    if (!isConnected) {
+        background(bgColor);
+        showStatus('Conectando al servidor...', color(255, 165, 0));
+        return;
+    }
+    
+    if (!hasRemoteData) {
+        background(bgColor);
+        showStatus('Esperando conexión de la otra ventana...', color(255, 165, 0));
+        return;
+    }
+    
+    if (!isFullySynced) {
+        background(bgColor);
+        showStatus('Sincronizando datos...', color(255, 165, 0));
+        return;
+    }
+
+    checkWindowPosition();
+    
+    // Calcular posiciones
+    let vector1 = createVector(currentPageData.x, currentPageData.y);
+    let vector2 = createVector(remotePageData.x, remotePageData.y);
+    let resultingVector = createVector(vector2.x - vector1.x, vector2.y - vector1.y);
+    
+    let remoteX = resultingVector.x + remotePageData.width / 2;
+    let remoteY = resultingVector.y + remotePageData.height / 2;
+    
+    // Calcular distancia entre esferas
+    let distance = calculateDistance(point1[0], point1[1], remoteX, remoteY);
+    
+    // Oscurecer fondo según la cercanía
+    if (distance < DISTANCE_CLOSE) {
+        let darkness = map(distance, DISTANCE_CLOSE, 0, 220, 20);
+        bgColor = darkness;
+    }
+    
+    background(bgColor);
+    
+    // ESTADO 1: LEJOS - No hace nada
+    if (distance > DISTANCE_FAR) {
+        drawSphere(point1[0], point1[1], color(255, 0, 0), 75);
+    }
+    // ESTADO 2: DISTANCIA MEDIA - Lanzar partículas
+    else if (distance > DISTANCE_CLOSE && distance <= DISTANCE_FAR) {
+        drawSphere(point1[0], point1[1], color(255, 0, 0), 75);
+        
+        // Generar partículas rojas hacia la otra esfera
+        if (frameCount % 5 === 0) {
+            particles.push(new Particle(point1[0], point1[1], remoteX, remoteY, color(255, 0, 0)));
+        }
+    }
+    // ESTADO 3: MUY CERCA - Fusión y explosión
+    else {
+        // Calcular punto medio para la fusión
+        let midX = (point1[0] + remoteX) / 2;
+        let midY = (point1[1] + remoteY) / 2;
+        
+        // Dibujar esfera morada fusionada
+        drawSphere(midX, midY, color(150, 50, 200), 100);
+        
+        // Generar partículas de explosión moradas
+        if (frameCount % 2 === 0) {
+            for (let i = 0; i < 3; i++) {
+                particles.push(new Particle(midX, midY, 0, 0, color(150, 50, 200), true));
+            }
+        }
+        
+        // Generar rayos de luz morados
+        if (frameCount % 8 === 0) {
+            lightningBolts.push(new LightningBolt(midX, midY));
+        }
+    }
+    
+    // Actualizar y dibujar partículas
+    for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].display();
+        if (particles[i].isDead()) {
+            particles.splice(i, 1);
+        }
+    }
+    
+    // Actualizar y dibujar rayos
+    for (let i = lightningBolts.length - 1; i >= 0; i--) {
+        lightningBolts[i].update();
+        lightningBolts[i].display();
+        if (lightningBolts[i].isDead()) {
+            lightningBolts.splice(i, 1);
+        }
+    }
+    
+    // Mostrar info de debug
+    fill(255);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, TOP);
+    text(`Distancia: ${distance.toFixed(0)}px`, 10, 10);
+    text(`Partículas: ${particles.length}`, 10, 25);
+    text(`Rayos: ${lightningBolts.length}`, 10, 40);
+}
+
+function showStatus(message, statusColor) {
+    textSize(24);
+    textAlign(CENTER, CENTER);
+    noStroke();
+    fill(0, 0, 0, 150);
+    rectMode(CENTER);
+    let textW = textWidth(message) + 40;
+    let textH = 40;
+    rect(width / 2, height / 6, textW, textH, 10);
+    fill(statusColor);
+    text(message, width / 2, height / 6);
+}
+
+function drawSphere(x, y, col, size) {
+    // Glow exterior
+    for (let i = 3; i > 0; i--) {
+        noStroke();
+        fill(col.levels[0], col.levels[1], col.levels[2], 30 / i);
+        ellipse(x, y, size * (1 + i * 0.3), size * (1 + i * 0.3));
+    }
+    
+    // Esfera principal
+    fill(col);
+    noStroke();
+    ellipse(x, y, size, size);
+    
+    // Brillo interior
+    fill(255, 255, 255, 100);
+    ellipse(x - size * 0.15, y - size * 0.15, size * 0.3, size * 0.3);
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+~~~
+
+~~~ js
+let currentPageData = {
+    x: window.screenX,
+    y: window.screenY,
+    width: window.innerWidth,
+    height: window.innerHeight
+}
+
+let previousPageData = {
+    x: window.screenX,
+    y: window.screenY,
+    width: window.innerWidth,
+    height: window.innerHeight
+};
+
+let remotePageData = { x: 0, y: 0, width: 100, height: 100 };
+let point2 = [currentPageData.width / 2, currentPageData.height / 2];
+let socket;
+let isConnected = false;
+let hasRemoteData = false;
+let isFullySynced = false;
+
+// Sistema de partículas
+let particles = [];
+let lightningBolts = [];
+
+// Configuración de distancias (en píxeles)
+const DISTANCE_FAR = 800;      // Lejos: no hace nada
+const DISTANCE_MEDIUM = 400;   // Medio: empieza a lanzar partículas
+const DISTANCE_CLOSE = 150;    // Cerca: fusión y explosión
+
+function setup() {
+    createCanvas(windowWidth, windowHeight);
+    frameRate(60);
+    socket = io();
+
+    socket.on('connect', () => {
+        console.log('Connected with ID:', socket.id);
+        isConnected = true;
+        socket.emit('win2update', currentPageData, socket.id);
+        
+        setTimeout(() => {
+            socket.emit('requestSync');
+        }, 500);
+    });
+
+    socket.on('getdata', (response) => {
+        if (response && response.data && isValidRemoteData(response.data)) {
+            remotePageData = response.data;
+            hasRemoteData = true;
+            console.log('Received valid remote data:', remotePageData);
+            socket.emit('confirmSync');
+        }
+    });
+
+    socket.on('fullySynced', (synced) => {
+        isFullySynced = synced;
+        console.log('Sync status:', synced ? 'SYNCED' : 'NOT SYNCED');
+    });
+
+    socket.on('peerDisconnected', () => {
+        hasRemoteData = false;
+        isFullySynced = false;
+        particles = [];
+        lightningBolts = [];
+        console.log('Peer disconnected, waiting for reconnection...');
+    });
+
+    socket.on('disconnect', () => {
+        isConnected = false;
+        hasRemoteData = false;
+        isFullySynced = false;
+        particles = [];
+        lightningBolts = [];
+        console.log('Disconnected from server');
+    });
+}
+
+function isValidRemoteData(data) {
+    return data && 
+           typeof data.x === 'number' && 
+           typeof data.y === 'number' && 
+           typeof data.width === 'number' && data.width > 0 &&
+           typeof data.height === 'number' && data.height > 0;
+}
+
+function checkWindowPosition() {
+    currentPageData = {
+        x: window.screenX,
+        y: window.screenY,
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+
+    if (currentPageData.x !== previousPageData.x || currentPageData.y !== previousPageData.y || 
+        currentPageData.width !== previousPageData.width || currentPageData.height !== previousPageData.height) {
+
+        point2 = [currentPageData.width / 2, currentPageData.height / 2]
+        socket.emit('win2update', currentPageData, socket.id);
+        previousPageData = currentPageData; 
+    }
+}
+
+// Calcular distancia entre las dos esferas
+function calculateDistance(x1, y1, x2, y2) {
+    return dist(x1, y1, x2, y2);
+}
+
+// Clase para partículas individuales
+class Particle {
+    constructor(x, y, targetX, targetY, col, isExplosion = false) {
+        this.pos = createVector(x, y);
+        this.col = col;
+        this.alpha = 255;
+        this.size = random(3, 8);
+        this.isExplosion = isExplosion;
+        
+        if (isExplosion) {
+            // Partículas de explosión: dirección aleatoria hacia afuera
+            let angle = random(TWO_PI);
+            let speed = random(3, 8);
+            this.vel = createVector(cos(angle) * speed, sin(angle) * speed);
+            this.life = 255;
+        } else {
+            // Partículas normales: van hacia el objetivo
+            this.target = createVector(targetX, targetY);
+            let direction = p5.Vector.sub(this.target, this.pos);
+            direction.normalize();
+            direction.mult(random(2, 4));
+            this.vel = direction;
+        }
+    }
+    
+    update() {
+        this.pos.add(this.vel);
+        
+        if (this.isExplosion) {
+            this.life -= 3;
+            this.alpha = this.life;
+        } else {
+            this.alpha -= 2;
+        }
+    }
+    
+    display() {
+        noStroke();
+        fill(this.col.levels[0], this.col.levels[1], this.col.levels[2], this.alpha);
+        circle(this.pos.x, this.pos.y, this.size);
+        
+        // Glow effect
+        fill(this.col.levels[0], this.col.levels[1], this.col.levels[2], this.alpha * 0.3);
+        circle(this.pos.x, this.pos.y, this.size * 2);
+    }
+    
+    isDead() {
+        if (this.isExplosion) {
+            return this.life <= 0;
+        }
+        return this.alpha <= 0;
+    }
+}
+
+// Clase para rayos de luz
+class LightningBolt {
+    constructor(x, y) {
+        this.pos = createVector(x, y);
+        let angle = random(TWO_PI);
+        let length = random(100, 250);
+        this.endX = x + cos(angle) * length;
+        this.endY = y + sin(angle) * length;
+        this.segments = [];
+        this.life = 255;
+        this.generateSegments();
+    }
+    
+    generateSegments() {
+        let steps = 10;
+        for (let i = 0; i <= steps; i++) {
+            let t = i / steps;
+            let x = lerp(this.pos.x, this.endX, t) + random(-10, 10);
+            let y = lerp(this.pos.y, this.endY, t) + random(-10, 10);
+            this.segments.push(createVector(x, y));
+        }
+    }
+    
+    update() {
+        this.life -= 15;
+    }
+    
+    display() {
+        stroke(150, 50, 200, this.life);
+        strokeWeight(3);
+        noFill();
+        beginShape();
+        for (let seg of this.segments) {
+            vertex(seg.x, seg.y);
+        }
+        endShape();
+        
+        // Glow
+        stroke(200, 100, 255, this.life * 0.5);
+        strokeWeight(6);
+        beginShape();
+        for (let seg of this.segments) {
+            vertex(seg.x, seg.y);
+        }
+        endShape();
+    }
+    
+    isDead() {
+        return this.life <= 0;
+    }
+}
+
+function draw() {
+    // Fondo dinámico según distancia
+    let bgColor = 220;
+    
+    if (!isConnected) {
+        background(bgColor);
+        showStatus('Conectando al servidor...', color(255, 165, 0));
+        return;
+    }
+    
+    if (!hasRemoteData) {
+        background(bgColor);
+        showStatus('Esperando conexión de la otra ventana...', color(255, 165, 0));
+        return;
+    }
+    
+    if (!isFullySynced) {
+        background(bgColor);
+        showStatus('Sincronizando datos...', color(255, 165, 0));
+        return;
+    }
+
+    checkWindowPosition();
+    
+    // Calcular posiciones
+    let vector2 = createVector(remotePageData.x, remotePageData.y);
+    let vector1 = createVector(currentPageData.x, currentPageData.y);
+    let resultingVector = createVector(vector2.x - vector1.x, vector2.y - vector1.y);
+    
+    let remoteX = resultingVector.x + remotePageData.width / 2;
+    let remoteY = resultingVector.y + remotePageData.height / 2;
+    
+    // Calcular distancia entre esferas
+    let distance = calculateDistance(point2[0], point2[1], remoteX, remoteY);
+    
+    // Oscurecer fondo según la cercanía
+    if (distance < DISTANCE_CLOSE) {
+        let darkness = map(distance, DISTANCE_CLOSE, 0, 220, 20);
+        bgColor = darkness;
+    }
+    
+    background(bgColor);
+    
+    // ESTADO 1: LEJOS - No hace nada
+    if (distance > DISTANCE_FAR) {
+        drawSphere(point2[0], point2[1], color(0, 100, 255), 75);
+    }
+    // ESTADO 2: DISTANCIA MEDIA - Lanzar partículas
+    else if (distance > DISTANCE_CLOSE && distance <= DISTANCE_FAR) {
+        drawSphere(point2[0], point2[1], color(0, 100, 255), 75);
+        
+        // Generar partículas azules hacia la otra esfera
+        if (frameCount % 5 === 0) {
+            particles.push(new Particle(point2[0], point2[1], remoteX, remoteY, color(0, 100, 255)));
+        }
+    }
+    // ESTADO 3: MUY CERCA - Fusión y explosión
+    else {
+        // Calcular punto medio para la fusión
+        let midX = (point2[0] + remoteX) / 2;
+        let midY = (point2[1] + remoteY) / 2;
+        
+        // Dibujar esfera morada fusionada
+        drawSphere(midX, midY, color(150, 50, 200), 100);
+        
+        // Generar partículas de explosión moradas
+        if (frameCount % 2 === 0) {
+            for (let i = 0; i < 3; i++) {
+                particles.push(new Particle(midX, midY, 0, 0, color(150, 50, 200), true));
+            }
+        }
+        
+        // Generar rayos de luz morados
+        if (frameCount % 8 === 0) {
+            lightningBolts.push(new LightningBolt(midX, midY));
+        }
+    }
+    
+    // Actualizar y dibujar partículas
+    for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].display();
+        if (particles[i].isDead()) {
+            particles.splice(i, 1);
+        }
+    }
+    
+    // Actualizar y dibujar rayos
+    for (let i = lightningBolts.length - 1; i >= 0; i--) {
+        lightningBolts[i].update();
+        lightningBolts[i].display();
+        if (lightningBolts[i].isDead()) {
+            lightningBolts.splice(i, 1);
+        }
+    }
+    
+    // Mostrar info de debug
+    fill(255);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT, TOP);
+    text(`Distancia: ${distance.toFixed(0)}px`, 10, 10);
+    text(`Partículas: ${particles.length}`, 10, 25);
+    text(`Rayos: ${lightningBolts.length}`, 10, 40);
+}
+
+function showStatus(message, statusColor) {
+    textSize(24);
+    textAlign(CENTER, CENTER);
+    noStroke();
+    fill(0, 0, 0, 150);
+    rectMode(CENTER);
+    let textW = textWidth(message) + 40;
+    let textH = 40;
+    rect(width / 2, height / 6, textW, textH, 10);
+    fill(statusColor);
+    text(message, width / 2, height / 6);
+}
+
+function drawSphere(x, y, col, size) {
+    // Glow exterior
+    for (let i = 3; i > 0; i--) {
+        noStroke();
+        fill(col.levels[0], col.levels[1], col.levels[2], 30 / i);
+        ellipse(x, y, size * (1 + i * 0.3), size * (1 + i * 0.3));
+    }
+    
+    // Esfera principal
+    fill(col);
+    noStroke();
+    ellipse(x, y, size, size);
+    
+    // Brillo interior
+    fill(255, 255, 255, 100);
+    ellipse(x - size * 0.15, y - size * 0.15, size * 0.3, size * 0.3);
+}
+
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
+~~~
+[Video demostratativo](https://youtu.be/QGAP57zoyMA)
