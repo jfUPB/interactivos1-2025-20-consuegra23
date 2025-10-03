@@ -1,4 +1,4 @@
-
+<img width="550" height="213" alt="image" src="https://github.com/user-attachments/assets/3ffddb52-af5f-46ae-9cbd-cef8c6fc22fa" />
 # Evidencias de la unidad 6
 
 <img width="1664" height="908" alt="Captura de pantalla 2025-09-23 105634" src="https://github.com/user-attachments/assets/8f144230-99a3-4da3-b702-299d45e62278" />
@@ -199,3 +199,15 @@ All clients are fully synced
 Debug - Connected clients: 2, Page1: 1, Page2: 1, Synced: 2
 All clients are fully synced
 Por alguna razon despues de comprobar que intentar entrar con el port en 3000 no servia y volver a abrir el 3001 en un navegador diferente empezo a fucnionar de la nada y sin motivo aparente, esto rompe todo lo que creia del funionanmiento del port haciendo que no fuera un numero arbitrario, pero parece que si lo haz pues no modifico el funcionamiento
+
+## Actividad 04
+
+<img width="541" height="331" alt="image" src="https://github.com/user-attachments/assets/76ec3fcb-bb50-428f-bce1-df51d78aa84b" />
+
+Al seguir las instrucciones sin reinciar la pgaina llega hasta este punto ahi se ve claramente que genera un error por que no se puede conectar ya mas a nada y se queda esperando.
+
+<img width="550" height="213" alt="image" src="https://github.com/user-attachments/assets/1f00efac-0227-4c97-a043-ca09bc20242a" />
+
+<img width="547" height="251" alt="image" src="https://github.com/user-attachments/assets/613742a5-7af7-4974-b5a7-5256564c8096" />
+
+Despues de reiniciar y despues de reiniciar el servidor y reiniciar la pagina respectivamente, se puede ver que sin iniciar el servidor todavia presenta el mismo error de codigo por lo que se asume que ese error es que no es capaz de encontrar el servidor por el que funciona. y al iniciar el servidor luego funciona normalmente y no presenta errores.
