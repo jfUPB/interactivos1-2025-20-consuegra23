@@ -105,7 +105,7 @@ La diferencia fundamental entre HTTP y WebSockets/Socket.IO está en cómo se co
 
 Este tipo de comunicación se usa en aplicaciones como chats en línea, videojuegos multijugador, transmisiones en vivo, tableros colaborativos o sistemas de monitoreo. En estos casos, la velocidad y la actualización instantánea son clave para una buena experiencia de usuario.
 
-## Actividad 4
+## Actividad 03
 #### cambiar la ruta de page1 a pagina_uno
 el programa funciona completamente bien y sin ningun problema o variacion, lo que muestra que la ruta no es lo mas primordial al momento de iniciar el programa y solo nos ayuda a iniciar la pagina y puede ser modificada sin ningun problema mayor
 #### Seguir los pasos mientras se observa el servidor
@@ -942,3 +942,20 @@ function windowResized() {
 }
 ~~~
 [Video demostratativo](https://youtu.be/QGAP57zoyMA)
+
+## AutoEvaluacion
+
+### Actividad 01:
+yo considero que la investigacion y experimentacion que hice para la actividad 1 es correcta de mas que aunque es algo sencillo o hasta ligero la cantidadd de texto que llegue a escrbiri considero que esta bien establecido y genuinamente aprendido pues fue bajo esa que alcance a hacer todas las demas actividades.
+
+### Actividad 02:
+De esta puedo estar un poco mas orgulloso pues ademas de ser bastante amplia la cantidad de texto que escribi, es bastante descriptiva y los usos investigativos me quedaron bastante claros pues son las bases teoricas de lo que realize en lo futuro de esta unidad, yo siento que esta estuvo muy bien lograda.
+
+### Actividad 03:
+Tambien la considero muy bien lograda, todo realize la actividad en su totalidad con buena escritura y todo me quedo bastante claro en las modificaciones que hice en al programa durante los ejericicios asignados en esta actividad.
+
+### Actividad 04:
+Esta si no la considero lograda pues tomando en cuanta que no la complete en su totalidad a pesar del tiempo disponible y que lo poco que escribi no fue muy bien retenido por mi, Yo creo que pude haberme esforzado mas en esta.
+
+### Actividad 05:
+Estoy muy confiado en esta actividad, me encanto como proyecto y aprendi bastante del funcionamiento de todo en esta unidad, estoy genuinamente orgulloso del resultado y creo que es muy merecedora de estar logradad al 100%.
