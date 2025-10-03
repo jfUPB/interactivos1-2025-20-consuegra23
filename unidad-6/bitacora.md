@@ -208,6 +208,8 @@ Al seguir las instrucciones sin reinciar la pgaina llega hasta este punto ahi se
 
 <img width="550" height="213" alt="image" src="https://github.com/user-attachments/assets/1f00efac-0227-4c97-a043-ca09bc20242a" />
 
+
 <img width="547" height="251" alt="image" src="https://github.com/user-attachments/assets/613742a5-7af7-4974-b5a7-5256564c8096" />
 
 Despues de reiniciar y despues de reiniciar el servidor y reiniciar la pagina respectivamente, se puede ver que sin iniciar el servidor todavia presenta el mismo error de codigo por lo que se asume que ese error es que no es capaz de encontrar el servidor por el que funciona. y al iniciar el servidor luego funciona normalmente y no presenta errores.
+
