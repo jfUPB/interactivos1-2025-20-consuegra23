@@ -64,3 +64,17 @@ Received message => { type: 'touch', x: 207.4666748046875, y: 158.75555419921875
 Received message => { type: 'touch', x: 218.84445190429688, y: 153.7777862548828 }
 ~~~
 La interaccion funciona completamente tormal por ahora, presenta cierto retraso a la interaccion, ligeramente notable pero no altera su funcionamiento demasiado.
+
+#### Explica con tus propias palabras: ¿Por qué es necesario Dev Tunnels en este escenario y cómo funciona conceptualmente?
+
+Dev Tunnels es necesario en este escenario porque permite que el servidor local que corre en localhost:3000 sea accesible desde cualquier dispositivo, incluso si no está en la misma red. Esto es útil cuando se quiere probar una aplicación web desde un celular o compartirla con otros sin exponer directamente la IP local ni configurar el router. Conceptualmente, Dev Tunnels crea una URL pública que actúa como intermediario seguro entre Internet y el servidor local, reenviando las solicitudes entrantes al puerto correspondiente en la máquina del desarrollador.
+
+#### Describe la función de touchMoved() y por qué se usa la variable threshold en el cliente móvil.
+
+La función touchMoved() en p5.js se ejecuta continuamente mientras el usuario mantiene el dedo sobre la pantalla y lo mueve. Es útil para capturar gestos táctiles en tiempo real, como trazos o desplazamientos. La variable threshold se utiliza para evitar enviar datos por cada pequeño movimiento, lo que optimiza el rendimiento y reduce el tráfico de red. Solo se envía información si el cambio en la posición del toque supera cierto umbral, lo que indica un movimiento significativo y evita saturar la conexión con datos innecesarios.
+
+#### Compara brevemente Dev Tunnels con simplemente usar la IP local. ¿Cuáles son las ventajas y desventajas de cada uno?
+
+Usar la IP local permite acceder al servidor desde otro dispositivo solo si ambos están conectados a la misma red y no hay bloqueos por firewall. Es una solución rápida pero limitada a entornos privados. Dev Tunnels, en cambio, ofrece una URL pública accesible desde cualquier lugar, lo que facilita pruebas remotas y colaboración. La ventaja de Dev Tunnels es su accesibilidad global y seguridad integrada, mientras que su desventaja es la dependencia de servicios externos y posibles restricciones de velocidad o disponibilidad.
+
+#### Coloca en tu bitácora capturas de pantalla del sistema completo funcionando. Esto lo puedes hacer abriendo tanto el mobile como el desktop en tu computador y tomando una captura de pantalla de todos los involucrados (celular, computador y terminal).
