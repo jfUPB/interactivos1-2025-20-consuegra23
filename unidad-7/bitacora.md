@@ -113,4 +113,5 @@ Los mensajes console.log en el servidor proporcionan información vital para mon
 #### Actividad 05
 
 <img width="4500" height="3000" alt="image" src="https://github.com/user-attachments/assets/cb61f964-0275-43cc-b25c-17a22bd8b8d5" />
-La base de la aplicacion esta completamente basada en la cancion https://www.youtube.com/watch?v=ZK82EmKzXEk&list=RDZK82EmKzXEk&start_radio=1
+La base de la aplicacion esta completamente basada en la cancion URL[Look a Like](https://youtu.be/ZK82EmKzXEk?list=RDZK82EmKzXEk) de la Ova de sonic de 1996, El plan es usar el coro de la cancion en la que canta repetidamente "On a sunday riding my bike, I notice, I notice, Diferent things that look a like" Tomando literalmente a un muchacho montando una bicicleta con un fondo el cual puede ser modificado dividiendo el mobile en 3 secciones, manejando suave, manejando medio, y manejando rapido, haciendo que el fondo cambie mientras mas rapido va.
+Todo el fondo debe estar haciendo bouncing al ritmo de la cancion
