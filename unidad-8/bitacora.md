@@ -13,5 +13,6 @@ El micro:bit se va a poder controlar la esfera por medio del giroscopio referent
 Para el mobile una apariencia parecida a esta o la segunda imagen, mostrando una palaca o dos botones para la direccion y otra para saltar.
 Idea de modelo del mobile
 <img width="4122" height="1191" alt="image" src="https://github.com/user-attachments/assets/a98fb468-9165-4b74-b50a-dc2470822aee" />
-<img width="4500" height="3000" alt="image" src="https://github.com/user-attachments/assets/527d3f15-6f32-4133-95d1-597d27fa37a6" />
 Diseño del desktop
+<img width="4500" height="3000" alt="image" src="https://github.com/user-attachments/assets/527d3f15-6f32-4133-95d1-597d27fa37a6" />
+![Flowchart (1)](https://github.com/user-attachments/assets/b3656de3-0a11-4e0b-ba18-4d8788631f3e)
